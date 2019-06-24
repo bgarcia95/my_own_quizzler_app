@@ -58,8 +58,8 @@ class _QuizzlerBodyState extends State<QuizzlerBody> {
             ),
           ],
         ).show();
-        quizBrain.reset();
         scoreKeeper = [];
+        quizBrain.reset();
       } else {
         if (userPickedAnswer == true) {
           scoreKeeper.add(

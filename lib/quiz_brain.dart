@@ -51,10 +51,8 @@ class QuizBrain {
 
   bool isFinished() {
     if (_questionNumber == _questionBank.length - 1) {
-      print('Finished!');
       return true;
     } else {
-      print('Not finished!');
       return false;
     }
   }
