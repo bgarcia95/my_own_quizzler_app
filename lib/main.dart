@@ -8,6 +8,9 @@
 // connected to a callback that increments a counter.
 
 import 'package:flutter/material.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzler());
 
@@ -29,6 +32,32 @@ class QuizzlerBody extends StatefulWidget {
 }
 
 class _QuizzlerBodyState extends State<QuizzlerBody> {
+  List<Icon> scoreKeeper = [];
+
+  void isCorrect(bool userPickedAnswer) {
+    userPickedAnswer = quizBrain.getQuestionAnswer();
+
+    if (userPickedAnswer == true) {
+      scoreKeeper.add(
+        Icon(
+          Icons.check,
+          color: Colors.green,
+        ),
+      );
+    } else {
+      scoreKeeper.add(
+        Icon(
+          Icons.close,
+          color: Colors.red,
+        ),
+      );
+
+      setState(() {
+        quizBrain.nextQuestion();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,7 +70,7 @@ class _QuizzlerBodyState extends State<QuizzlerBody> {
               padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: Text(
-                  'Here is where the question will go.',
+                  quizBrain.getQuestionText(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25.0,
@@ -66,6 +95,7 @@ class _QuizzlerBodyState extends State<QuizzlerBody> {
                 ),
                 onPressed: () {
                   //The user  picked true.
+                  isCorrect(true);
                 },
               ),
             ),
@@ -84,8 +114,17 @@ class _QuizzlerBodyState extends State<QuizzlerBody> {
                 ),
                 onPressed: () {
                   //The user picked false
+                  isCorrect(false);
                 },
               ),
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: scoreKeeper,
             ),
           ),
         ],
