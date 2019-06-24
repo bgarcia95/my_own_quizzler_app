@@ -37,28 +37,48 @@ class _QuizzlerBodyState extends State<QuizzlerBody> {
 
   void isCorrect(bool userPickedAnswer) {
     userPickedAnswer = quizBrain.getQuestionAnswer();
-
-    if (quizBrain.isFinished() == true) {}
-
-    if (userPickedAnswer == true) {
-      scoreKeeper.add(
-        Icon(
-          Icons.check,
-          color: Colors.green,
-        ),
-      );
-    } else {
-      scoreKeeper.add(
-        Icon(
-          Icons.close,
-          color: Colors.red,
-        ),
-      );
-
-      setState(() {
+    setState(() {
+      if (quizBrain.isFinished() == true) {
+        Alert(
+          context: context,
+          type: AlertType.none,
+          title: 'Finished!',
+          desc: 'You\'ve reached the end of the quiz!',
+          buttons: [
+            DialogButton(
+              width: 250.0,
+              child: Text(
+                'CANCEL',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ).show();
+        quizBrain.reset();
+        scoreKeeper = [];
+      } else {
+        if (userPickedAnswer == true) {
+          scoreKeeper.add(
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          scoreKeeper.add(
+            Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        }
         quizBrain.nextQuestion();
-      });
-    }
+      }
+    });
   }
 
   @override
