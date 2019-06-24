@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain();
 
@@ -36,6 +37,8 @@ class _QuizzlerBodyState extends State<QuizzlerBody> {
 
   void isCorrect(bool userPickedAnswer) {
     userPickedAnswer = quizBrain.getQuestionAnswer();
+
+    if (quizBrain.isFinished() == true) {}
 
     if (userPickedAnswer == true) {
       scoreKeeper.add(
